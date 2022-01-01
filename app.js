@@ -13,9 +13,11 @@ app.set('view engine', 'ejs');
 
 // Middlewares
 app.use(express.static('public'));
+app.use(express.urlencoded({extended: true}))
+app.use(express.json()) // for parsing application/json
 
 app.use('/', pageRouter);
-app.use('/course', courseRouter);
+app.use('/courses', courseRouter);
 
 const port = 3000;
 
