@@ -3,7 +3,7 @@ const slugify = require('slugify');
 const Schema = mongoose.Schema;
 
 // Create Course Schema
-const CourseShema = new Schema({
+const CourseSchema = new Schema({
   name: {
     type: String,
     unique: true,
@@ -27,7 +27,7 @@ const CourseShema = new Schema({
   },
 });
 
-CourseShema.pre('validate', function (next) {
+CourseSchema.pre('validate', function (next) {
   this.slug = slugify(this.name, {
     lower: true,
     strict: true,
@@ -35,6 +35,6 @@ CourseShema.pre('validate', function (next) {
   next();
 });
 
-const Course = mongoose.model('Course', CourseShema);
+const Course = mongoose.model('Course', CourseSchema);
 
 module.exports = Course;

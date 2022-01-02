@@ -3,7 +3,7 @@ const slugify = require('slugify');
 const Schema = mongoose.Schema;
 
 // Create Category Schema
-const CategoryShema = new Schema({
+const CategorySchema = new Schema({
   name: {
     type: String,
     unique: true,
@@ -15,7 +15,7 @@ const CategoryShema = new Schema({
   },
 });
 
-CategoryShema.pre('validate', function (next) {
+CategorySchema.pre('validate', function (next) {
   this.slug = slugify(this.name, {
     lower: true,
     strict: true,
@@ -23,6 +23,6 @@ CategoryShema.pre('validate', function (next) {
   next();
 });
 
-const Category = mongoose.model('Category', CategoryShema);
+const Category = mongoose.model('Category', CategorySchema);
 
 module.exports = Category;
