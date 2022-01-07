@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 const pageRouter = require('./routes/pageRouter');
 const courseRouter = require('./routes/courseRouter');
 const categoryRouter = require('./routes/categoryRoute');
@@ -19,6 +20,9 @@ app.set('view engine', 'ejs');
 global.userIN = null;
 
 // Middlewares
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // for parsing application/json
 app.use(
   session({
     secret: 'smart_edu_keyboard',
@@ -27,9 +31,11 @@ app.use(
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost/smartEdu' }),
   })
 );
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // for parsing application/json
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.flashMessages = req.flash();
+  next();
+});
 
 // Routes
 app.use('*', (req, res, next) => {

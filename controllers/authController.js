@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Category = require('../models/Category')
 const Course = require('../models/Course')
+
 exports.createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
