@@ -65,3 +65,15 @@ exports.getdashboardPage = async (req, res) => {
     users
   });
 };
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndRemove(req.params.id)
+    await Course.deleteMany({user:req.params.id})
+    req.flash('success', `${user.email} has been remove successfuly`);
+    res.status(200).redirect('/users/dashboard');
+  } catch (error) {
+    req.flash('error', `Something happened!`);
+    res.status(400).redirect('/users/dashboard');
+  }
+};
