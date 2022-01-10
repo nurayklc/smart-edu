@@ -12,7 +12,7 @@ const userRouter = require('./routes/userRoute');
 const app = express();
 
 // Connect DB
-mongoose.connect('mongodb://localhost/smartEdu');
+mongoose.connect('mongodb+srv://dbUser:5gu8994Htd4N97U@cluster0.ixpee.mongodb.net/smartEdu-db?retryWrites=true&w=majority');
 
 // Template Engine
 app.set('view engine', 'ejs');
@@ -29,7 +29,7 @@ app.use(
     secret: 'smart_edu_keyboard',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/smartEdu' }),
+    store: MongoStore.create({ mongoUrl: 'mongodb+srv://dbUser:5gu8994Htd4N97U@cluster0.ixpee.mongodb.net/smartEdu-db?retryWrites=true&w=majority' }),
   })
 );
 app.use(flash());
@@ -53,7 +53,7 @@ app.use('/courses', courseRouter);
 app.use('/categories', categoryRouter);
 app.use('/users', userRouter);
 
-const port = 3000;
+const port = process.env.port || 5000;
 
 app.listen(port, () => {
   console.log(`App started on port ${port}`);
